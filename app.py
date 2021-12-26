@@ -1,7 +1,20 @@
 from flask import Flask, render_template, request
 import boto3
+from elasticapm.contrib.flask import ElasticAPM
+
 app = Flask(__name__)
+
+
+app.config['ELASTIC_APM'] = {
+    'SERVICE_NAME': 'app',
+    'SECRET_TOKEN': 'VmWj7v2Er8WoiiDPN3',
+    'SERVER_URL': 'https://9a9fa401c090449ab47ec8a07f8dc47b.apm.eu-west-1.aws.cloud.es.io:443',
+    'DEBUG': True
+    }
+apm = ElasticAPM(app)
+
 from werkzeug.utils import secure_filename
+
 
 
 s3 = boto3.client('s3',
